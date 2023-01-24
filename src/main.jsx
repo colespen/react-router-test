@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+
 import {
   createBrowserRouter,
   RouterProvider,
@@ -16,7 +17,13 @@ import Contact, {
   loader as contactLoader,
 } from "./routes/contact";
 
+import EditContact, {
+  action as editAction,
+} from "./routes/edit";
+
 import "./index.css";
+
+
 
 ////// assign route names, associated elemnents, errors and children paths
 const router = createBrowserRouter([
@@ -31,6 +38,12 @@ const router = createBrowserRouter([
         path: "contacts/:contactId",
         element: <Contact />,
         loader: contactLoader,
+      },
+      {
+        path: "contacts/:contactId/edit",
+        element: <EditContact />,
+        loader: contactLoader,
+        action: editAction,
       },
     ]
   },
