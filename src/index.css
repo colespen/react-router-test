@@ -246,7 +246,7 @@ i {
 
 #detail.loading {
   opacity: 0;
-  transition: opacity 250ms ease;
+  transition: opacity 200ms ease;
   /* transition-delay: 200ms; */
 }
 
