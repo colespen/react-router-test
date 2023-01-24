@@ -11,12 +11,13 @@ export async function action({ request, params }) {
 
   const formData = await request.formData();
   const updates = Object.fromEntries(formData);
+  // const firstName = formData.get("first");
+  // const lastName = formData.get("last");
 
   await updateContact(params.contactId, updates);
 
   return redirect(`/contacts/${params.contactId}`);
 }
-
 
 export default function EditContact() {
   const contact = useLoaderData();

@@ -245,9 +245,9 @@ i {
 }
 
 #detail.loading {
-  opacity: 0.25;
-  transition: opacity 200ms;
-  transition-delay: 200ms;
+  opacity: 0;
+  transition: opacity 250ms ease;
+  /* transition-delay: 200ms; */
 }
 
 #contact {

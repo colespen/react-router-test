@@ -1,8 +1,10 @@
 import {
   Outlet,
-  Link,
+  NavLink,
   useLoaderData,
   Form,
+  redirect,
+  useNavigation,
 } from "react-router-dom";
 import { getContacts, createContact } from "../contacts";
 
@@ -15,13 +17,14 @@ export async function loader() {
 //// action set in main.jsx action: rootAction
 export async function action() {
   const contact = await createContact();
-  return { contact };
+  return redirect(`/contacts/${contact.id}/edit`);
 }
 
 
 export default function Root() {
 
   const { contacts } = useLoaderData();
+  const navigation = useNavigation();
 
   return (
     <>
@@ -59,7 +62,16 @@ export default function Root() {
                   {/* Client side routing allows our app to update the URL 
                   without requesting another document from the server 
                   - use Link (like Next.js) */}
-                  <Link to={`contacts/${contact.id}`}>
+                  {/* passing a function ti className */}
+                  <NavLink to={`contacts/${contact.id}`}
+                    className={({ isActive, isPending }) =>
+                      isActive
+                        ? "active"
+                        : isPending
+                          ? "pending"
+                          : ""
+                    }
+                  >
                     {contact.first || contact.last ? (
                       <>
                         {contact.first} {contact.last}
@@ -68,7 +80,7 @@ export default function Root() {
                       <i>No Name</i>
                     )}{" "}
                     {contact.favorite && <span>★</span>}
-                  </Link>
+                  </NavLink>
                 </li>
               ))}
             </ul>
@@ -80,7 +92,12 @@ export default function Root() {
         </nav>
 
       </div>
-      <div id="detail">
+      <div
+        id="detail"
+        className={
+          navigation.state === "loading" ? "loading" : ""
+        }
+      >
         {/* tell Root route where to render child routes */}
         <Outlet />
       </div>

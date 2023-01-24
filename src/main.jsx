@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
+import "./index.css";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -21,8 +22,7 @@ import EditContact, {
   action as editAction,
 } from "./routes/edit";
 
-import "./index.css";
-
+import { action as destroyAction } from "./routes/destroy"
 
 
 ////// assign route names, associated elemnents, errors and children paths
@@ -44,6 +44,10 @@ const router = createBrowserRouter([
         element: <EditContact />,
         loader: contactLoader,
         action: editAction,
+      },
+      {
+        path: "contacts/:contactId/destroy",
+        action: destroyAction,
       },
     ]
   },
