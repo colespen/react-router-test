@@ -1,10 +1,44 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+import Root, {
+  loader as rootLoader,
+  action as rootAction,
+} from "./routes/root";
+
+import ErrorPage from "./error-page";
+
+import Contact, {
+  loader as contactLoader,
+} from "./routes/contact";
+
+import "./index.css";
+
+////// assign route names, associated elemnents, errors and children paths
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    errorElement: <ErrorPage />,
+    loader: rootLoader,
+    action: rootAction,
+    children: [
+      {
+        path: "contacts/:contactId",
+        element: <Contact />,
+        loader: contactLoader,
+      },
+    ]
+  },
+
+]);
+
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);
